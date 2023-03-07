@@ -1,8 +1,11 @@
 import React from 'react';
-import categories from '../data/all-categories';
-import Button from './button';
+import { categories } from '../data/all-categories';
+import Button from './Button';
 
-export default function Bar({ selectedCategory, setSelectedCategory }) {
+export default function NavigationBar({
+  selectedCategory,
+  setSelectedCategory,
+}) {
   return (
     <div className="categories">
       {categories.map((category, index) => {

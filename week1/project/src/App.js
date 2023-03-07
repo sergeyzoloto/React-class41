@@ -1,6 +1,6 @@
 import './App.css';
-import Bar from './components/bar';
-import ProductList from './components/products';
+import NavigationBar from './components/NavigationBar';
+import ProductList from './components/Products';
 import React, { useState } from 'react';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <h1>Products</h1>
-      <Bar
+      <NavigationBar
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />

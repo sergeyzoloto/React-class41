@@ -12,8 +12,8 @@ h1 {
 .categories {
   display: flex;
 }
+
 .categories button {
-  background-color: #efeff0;
   cursor: pointer;
   font-weight: 700;
   margin: 2px;
@@ -23,7 +23,11 @@ h1 {
 }
 
 .active {
-  background-color: #bdbdc1 !important;
+  background-color: #bdbdc1;
+}
+
+.inactive {
+  background-color: #efeff0;
 }
 
 .product-list {
