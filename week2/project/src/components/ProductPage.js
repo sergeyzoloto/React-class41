@@ -1,35 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import useFetch from '../hooks/useFetch';
 import { useParams } from 'react-router-dom';
 
 export default function ProductPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [product, setProduct] = useState({});
-
   const { id } = useParams();
+  const URL = 'https://fakestoreapi.com/products/' + id;
+  const { data, isLoading, errorMessage } = useFetch(URL);
+  const product = { data }.data;
 
-  useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      try {
-        const response = await fetch('https://fakestoreapi.com/products/' + id);
-        const fetchedProduct = await response.json();
-        setIsLoading(false);
-        setProduct(fetchedProduct);
-      } catch (error) {
-        setIsLoading(false);
-        setErrorMessage(error);
-      }
-    })();
-  }, [id]);
+  const Loading = (props) => {
+    if (isLoading) return <p>Loading...</p>;
+    return <></>;
+  };
 
-  return (
-    <>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : errorMessage ? (
-        <>{errorMessage}</>
-      ) : (
+  const Error = (props) => {
+    if (errorMessage) return <p>{errorMessage}</p>;
+    return <></>;
+  };
+
+  const Page = (props) => {
+    if (!isLoading)
+      return (
         <>
           <div className="product-page">
             <h1 className="product-title">{product.title}</h1>
@@ -51,7 +42,15 @@ export default function ProductPage() {
             />
           </div>
         </>
-      )}
+      );
+    return <></>;
+  };
+
+  return (
+    <>
+      <Loading isLoading={isLoading} />
+      <Error errorMessage={errorMessage} />
+      <Page isLoading={isLoading} product={product} />
     </>
   );
 }

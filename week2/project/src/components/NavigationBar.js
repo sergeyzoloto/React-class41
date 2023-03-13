@@ -1,40 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import useFetch from '../hooks/useFetch';
 import Button from './Button';
 
 export default function NavigationBar({
   selectedCategory,
   setSelectedCategory,
 }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [categories, setCategories] = useState([]);
+  const URL = 'https://fakestoreapi.com/products/categories';
+  const { data, isLoading, errorMessage } = useFetch(URL);
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          `https://fakestoreapi.com/products/categories`,
-        );
-        const fetchedCategories = await response.json();
-        setIsLoading(false);
-        setCategories(fetchedCategories);
-      } catch (error) {
-        setIsLoading(false);
-        setErrorMessage(error);
-      }
-    })();
-  }, []);
+  const Loading = (props) => {
+    if (isLoading) return <p>Loading...</p>;
+    return <></>;
+  };
 
-  return (
-    <>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : errorMessage ? (
-        <>{errorMessage}</>
-      ) : (
+  const Error = (props) => {
+    if (errorMessage) return <p>{errorMessage}</p>;
+    return <></>;
+  };
+
+  const Page = (props) => {
+    if (!isLoading)
+      return (
         <div className="categories">
-          {categories.map((category, index) => {
+          {data.map((category, index) => {
             return (
               <Button
                 key={index}
@@ -45,7 +34,15 @@ export default function NavigationBar({
             );
           })}
         </div>
-      )}
+      );
+    return <></>;
+  };
+
+  return (
+    <>
+      <Loading isLoading={isLoading} />
+      <Error errorMessage={errorMessage} />
+      <Page isLoading={isLoading} data={data} />
     </>
   );
 }
