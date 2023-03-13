@@ -6,15 +6,15 @@ export default function Button({
   setSelectedCategory,
 }) {
   const clickHandler = (category) => {
-    if (category === selectedCategory) {
+    if (category.target.value === selectedCategory) {
       setSelectedCategory('');
     } else {
-      setSelectedCategory(category);
+      setSelectedCategory(category.target.value);
     }
   };
   return (
     <button
-      onClick={() => clickHandler(category)}
+      onClick={clickHandler}
       className={selectedCategory === category ? 'active' : 'inactive'}
       value={category}
     >

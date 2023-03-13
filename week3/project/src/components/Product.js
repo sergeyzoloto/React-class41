@@ -4,7 +4,7 @@ import React from 'react';
 export default function Product({ product }) {
   return (
     <li className="product-unit">
-      <Link to={`${product.id}`}>
+      <Link to={'/' + product.id}>
         <div className="product">
           <img
             src={product.image}
