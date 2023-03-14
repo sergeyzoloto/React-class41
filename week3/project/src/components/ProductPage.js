@@ -1,6 +1,7 @@
 import React from 'react';
 import useFetch from '../hooks/useFetch';
 import { useParams } from 'react-router-dom';
+import Heart from './Heart';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -40,6 +41,7 @@ export default function ProductPage() {
               alt={product.title}
               className="product-image"
             />
+            <Heart id={+id} />
           </div>
         </>
       );

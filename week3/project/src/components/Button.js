@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GlobalContext } from '../GlobalContext';
 
-export default function Button({
-  category,
-  selectedCategory,
-  setSelectedCategory,
-}) {
-  const clickHandler = (category) => {
-    if (category.target.value === selectedCategory) {
+export default function Button({ category }) {
+  const { selectedCategory, setSelectedCategory } = useContext(GlobalContext);
+
+  const clickHandler = (event) => {
+    if (event.target.value === selectedCategory) {
       setSelectedCategory('');
     } else {
-      setSelectedCategory(category.target.value);
+      setSelectedCategory(event.target.value);
     }
   };
+
   return (
     <button
       onClick={clickHandler}

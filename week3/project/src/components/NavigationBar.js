@@ -1,11 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import Button from './Button';
 
-export default function NavigationBar({
-  selectedCategory,
-  setSelectedCategory,
-}) {
+export default function NavigationBar() {
   const URL = 'https://fakestoreapi.com/products/categories';
   const { data, isLoading, errorMessage } = useFetch(URL);
 
@@ -22,17 +20,13 @@ export default function NavigationBar({
   const Page = (props) => {
     if (!isLoading)
       return (
-        <div className="categories">
+        <div className="navbar">
           {data.map((category, index) => {
-            return (
-              <Button
-                key={index}
-                category={category}
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-              />
-            );
+            return <Button key={index} category={category} />;
           })}
+          <button>
+            <Link to="/favorites">favorites</Link>
+          </button>
         </div>
       );
     return <></>;

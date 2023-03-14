@@ -1,8 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
+import { GlobalContext } from '../GlobalContext';
 import useFetch from '../hooks/useFetch';
 import Product from './Product';
 
-export default function ProductList({ selectedCategory }) {
+export default function ProductList() {
+  const { selectedCategory } = useContext(GlobalContext);
   const INITIAL_URL = 'https://fakestoreapi.com/products';
   const [url, setUrl] = useState(INITIAL_URL);
   const { data, isLoading, errorMessage } = useFetch(url);
