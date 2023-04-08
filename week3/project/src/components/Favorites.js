@@ -4,8 +4,9 @@ import Product from './Product';
 import { GlobalContext } from '../GlobalContext';
 import { useContext } from 'react';
 
+const INITIAL_URL = 'https://fakestoreapi.com/products';
+
 export default function FavoriteList() {
-  const INITIAL_URL = 'https://fakestoreapi.com/products';
   const { favorites, removeAllFavorites, isLoading, errorMessage, setState } =
     useContext(GlobalContext);
 
