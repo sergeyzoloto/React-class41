@@ -51,9 +51,9 @@ export default function FavoriteList() {
     <>
       <h1>Favorites</h1>
       <div className="navbar">
-        <button>
-          <Link to="/">Back to homepage</Link>
-        </button>
+        <Link to="/">
+          <button>Back to homepage</button>
+        </Link>
         <button onClick={removeAllFavorites} className="categories">
           Remove all favorites
         </button>
