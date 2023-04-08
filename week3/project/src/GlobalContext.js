@@ -33,7 +33,7 @@ export const GlobalProvider = ({ children }) => {
     return favorites.includes(id);
   };
 
-  const clearFilter = () => {
+  const removeAllFavorites = () => {
     setFavorites([]);
   };
 
@@ -42,7 +42,7 @@ export const GlobalProvider = ({ children }) => {
     setFavorites,
     handleFavorites,
     isFavorite,
-    clearFilter,
+    removeAllFavorites,
     selectedCategory,
     setSelectedCategory,
   };

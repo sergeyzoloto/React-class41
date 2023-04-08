@@ -6,7 +6,7 @@ import { useContext } from 'react';
 
 export default function FavoriteList() {
   const INITIAL_URL = 'https://fakestoreapi.com/products';
-  const { favorites, clearFilter } = useContext(GlobalContext);
+  const { favorites, removeAllFavorites } = useContext(GlobalContext);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(false);
@@ -55,8 +55,8 @@ export default function FavoriteList() {
             <button>
               <Link to="/">Back to homepage</Link>
             </button>
-            <button onClick={clearFilter} className="categories">
-              Clear filter
+            <button onClick={removeAllFavorites} className="categories">
+              Remove all favorites
             </button>
           </div>
           <ul className="product-list">
