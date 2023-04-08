@@ -7,21 +7,23 @@ import FavoriteList from './components/Favorites';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-function App() {
-  const Application = (
-    <div className="App">
-      <h1>Products</h1>
+function Home() {
+  return (
+    <>
+      <h3>Home</h3>
       <NavigationBar />
       <ProductList />
-    </div>
+    </>
   );
+}
 
+function App() {
   return (
     <>
       <GlobalProvider>
         <Router>
           <Routes>
-            <Route path="/" element={Application} />
+            <Route path="/" element={<Home />} />
             <Route path="/:id" element={<ProductPage />} />
             <Route path="/favorites" element={<FavoriteList />} />
           </Routes>
