@@ -16,21 +16,19 @@ export default function FavoriteList() {
       return `${INITIAL_URL}/${id}`;
     });
 
-    (async () => {
-      setState({ isLoading: true, errorMessage: null });
-      let results = [];
-      try {
-        for (let i = 0; i < urls.length; i++) {
-          const response = await fetch(urls[i]);
-          const result = await response.json();
-          results.push(result);
-        }
+    setState({ isLoading: true, errorMessage: null });
+
+    Promise.all(
+      urls.map((url) => fetch(url).then((response) => response.json())),
+    )
+      .then((results) => {
         setState({ isLoading: false, errorMessage: null });
-      } catch (error) {
+        setFavoriteProducts(results);
+      })
+      .catch((error) => {
         setState({ isLoading: false, errorMessage: `${error}` });
-      }
-      setFavoriteProducts(results);
-    })();
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favorites]);
 
