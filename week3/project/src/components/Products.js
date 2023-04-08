@@ -18,33 +18,25 @@ export default function ProductList() {
     }
   }, [selectedCategory]);
 
-  const Loading = (props) => {
-    if (isLoading) return <p>Loading...</p>;
-    return <></>;
-  };
+  if (errorMessage)
+    return (
+      <div>
+        <p>{errorMessage}</p>
+      </div>
+    );
 
-  const Error = (props) => {
-    if (errorMessage) return <p>{errorMessage}</p>;
-    return <></>;
-  };
-
-  const Page = (props) => {
-    if (!isLoading)
-      return (
-        <ul className="product-list">
-          {data.map((product, index) => {
-            return <Product key={index} product={product} />;
-          })}
-        </ul>
-      );
-    return <></>;
-  };
+  if (isLoading)
+    return (
+      <div>
+        <h3>Loading...</h3>
+      </div>
+    );
 
   return (
-    <>
-      <Loading isLoading={isLoading} />
-      <Error errorMessage={errorMessage} />
-      <Page isLoading={isLoading} data={data} />
-    </>
+    <ul className="product-list">
+      {data.map((product, index) => {
+        return <Product key={index} product={product} />;
+      })}
+    </ul>
   );
 }
