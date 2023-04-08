@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Product from './Product';
 import { GlobalContext } from '../GlobalContext';
@@ -11,7 +11,7 @@ export default function FavoriteList() {
 
   const [favoriteProducts, setFavoriteProducts] = useState([]);
 
-  useMemo(() => {
+  useEffect(() => {
     const urls = favorites.map((id) => {
       return `${INITIAL_URL}/${id}`;
     });
