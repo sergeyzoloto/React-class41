@@ -1,4 +1,4 @@
-import { createContext, useState, useMemo } from 'react';
+import { createContext, useState, useEffect } from 'react';
 const initialState = {
   errorMessage: null,
   isLoading: false,
@@ -20,7 +20,7 @@ export const GlobalProvider = ({ children }) => {
 
   const [favorites, setFavorites] = useState(savedFavorites);
 
-  useMemo(() => {
+  useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
