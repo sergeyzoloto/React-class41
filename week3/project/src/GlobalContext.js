@@ -1,8 +1,13 @@
 import { createContext, useState, useMemo } from 'react';
-export const GlobalContext = createContext();
+const initialState = {
+  errorMessage: null,
+  isLoading: false,
+};
+export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ({ children }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [state, setState] = useState(initialState);
 
   function checkStorage() {
     if (localStorage.getItem('favorites')) {
@@ -45,6 +50,9 @@ export const GlobalProvider = ({ children }) => {
     removeAllFavorites,
     selectedCategory,
     setSelectedCategory,
+    errorMessage: state.errorMessage,
+    isLoading: state.isLoading,
+    setState,
   };
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>

@@ -6,10 +6,10 @@ import { useContext } from 'react';
 
 export default function FavoriteList() {
   const INITIAL_URL = 'https://fakestoreapi.com/products';
-  const { favorites, removeAllFavorites } = useContext(GlobalContext);
+  const { favorites, removeAllFavorites, isLoading, errorMessage, setState } =
+    useContext(GlobalContext);
+
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(false);
 
   useMemo(() => {
     const urls = favorites.map((id) => {
@@ -17,7 +17,7 @@ export default function FavoriteList() {
     });
 
     (async () => {
-      setIsLoading(true);
+      setState({ isLoading: true, errorMessage: null });
       let results = [];
       try {
         for (let i = 0; i < urls.length; i++) {
@@ -25,56 +25,45 @@ export default function FavoriteList() {
           const result = await response.json();
           results.push(result);
         }
-        setIsLoading(false);
+        setState({ isLoading: false, errorMessage: null });
       } catch (error) {
-        setErrorMessage(`Error:${error}`);
-      } finally {
-        setIsLoading(false);
+        setState({ isLoading: false, errorMessage: `${error}` });
       }
-      console.log('results:', results);
       setFavoriteProducts(results);
     })();
-  }, [favorites, setFavoriteProducts]);
-  console.log('favoriteProducts:', favoriteProducts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favorites]);
 
-  const Loading = (props) => {
-    if (isLoading) return <p>Loading...</p>;
-    return <></>;
-  };
+  if (errorMessage)
+    return (
+      <div>
+        <p>{errorMessage}</p>
+      </div>
+    );
 
-  const Error = (props) => {
-    if (errorMessage) return <p>{errorMessage}</p>;
-    return <></>;
-  };
-
-  const Page = (props) => {
-    if (!isLoading)
-      return (
-        <>
-          <div className="navbar">
-            <button>
-              <Link to="/">Back to homepage</Link>
-            </button>
-            <button onClick={removeAllFavorites} className="categories">
-              Remove all favorites
-            </button>
-          </div>
-          <ul className="product-list">
-            {favoriteProducts.map((product, index) => {
-              return <Product key={index} product={product} />;
-            })}
-          </ul>
-        </>
-      );
-    return <></>;
-  };
+  if (isLoading)
+    return (
+      <div>
+        <h3>Loading...</h3>
+      </div>
+    );
 
   return (
     <>
       <h1>Favorites</h1>
-      <Loading isLoading={isLoading} />
-      <Error errorMessage={errorMessage} />
-      <Page isLoading={isLoading} favoriteProducts={favoriteProducts} />
+      <div className="navbar">
+        <button>
+          <Link to="/">Back to homepage</Link>
+        </button>
+        <button onClick={removeAllFavorites} className="categories">
+          Remove all favorites
+        </button>
+      </div>
+      <ul className="product-list">
+        {favoriteProducts.map((product, index) => {
+          return <Product key={index} product={product} />;
+        })}
+      </ul>
     </>
   );
 }
