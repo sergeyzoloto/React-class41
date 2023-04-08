@@ -8,13 +8,11 @@ export default function Heart({ id }) {
   const inFav = isFavorite(id);
 
   return (
-    <>
-      <img
-        src={inFav ? heartChecked : heartUnchecked}
-        alt="favHeart"
-        className="fav_icon"
-        onClick={() => handleFavorites(id)}
-      />
-    </>
+    <img
+      src={inFav ? heartChecked : heartUnchecked}
+      alt="favHeart"
+      className="fav_icon"
+      onClick={() => handleFavorites(id)}
+    />
   );
 }
